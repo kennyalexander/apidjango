@@ -1,7 +1,7 @@
 from requests import Response
 from .models import Usuario
 from rest_framework.views import APIView
-from .serializers import UsuarioSerializer
+from .serializers import UsuarioSerializer, TablaSerializer
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 
@@ -21,6 +21,16 @@ class Registrar(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response({'message': '¡El método POST fue exitoso!'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class Tabla(APIView):
+    permission_classes = [AllowAny]
+    def post (self, request, format=None):
+        serializer = TablaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': '¡El método POST fue exitoso!'})
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
