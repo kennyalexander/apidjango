@@ -133,18 +133,25 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-        'rest_framework.permissions.DjangoModelPermissions',
-        'rest_framework.permissions.AllowAny',
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
         
-    ],
+#     ],
     
-} 
+# } 
 
 # REST_FRAMEWORK = {
 #    'DEFAULT_PERMISSION_CLASSES': (
 #         'rest_framework.permissions.IsAdminUser',
 #    ),
 # }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        # Otros esquemas de autenticación si los estás utilizando
+    ],
+}
+APPEND_SLASH = False

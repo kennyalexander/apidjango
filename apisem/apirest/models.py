@@ -13,6 +13,7 @@ class Usuario(models.Model):
     nombre = models.CharField(max_length=100, blank=True, null=True)
     edad = models.FloatField(blank=True, null=True)
     direccion = models.CharField(max_length=200, blank=True, null=True)
+    
 
     class Meta:
         managed = False

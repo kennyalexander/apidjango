@@ -3,37 +3,39 @@ from .models import Usuario
 from rest_framework.views import APIView
 from .serializers import UsuarioSerializer
 from rest_framework import generics, status
-from rest_framework import permissions
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
 
-# Create your views here.
+#Create your views here.
 
-# #listar usuario
-# class UsuariosList(generics.ListCreateAPIView):
-#     queryset = Usuario.objects.all()
-#     serializer_class = UsuarioSerializer
+#listar usuario
 
-# class Registrar:
-#     def registraruser (request):
-#         if request.method == 'POST':
-#             serializer = UsuarioSerializer (data=request.data)
-#             if serializer.is_valid():
-#                 serializer.save()
-#                 return Response(serializer.data, status=status.HTTP_201_CREATED)
+class UsuariosList(generics.ListCreateAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
 
-
-@permission_classes((permissions.AllowAny,))
-class UsuariosList(APIView):
-    @permission_classes((permissions.AllowAny,))
-    def get(self, request, format=None):
-        usuario = Usuario.objects.all()
-        serializer = UsuarioSerializer(usuario, many=True)
-        return Response(serializer.data)
-    def post(self, request, format=None):
+class Registrar(APIView):
+    permission_classes = [AllowAny]
+    def post (self, request, format=None):
         serializer = UsuarioSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': '¡El método POST fue exitoso!'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# class UsuariosList(APIView):
+#     print("entro a la clase")
+#     def get(self, arg):
+#         print("entro aqui")
+#         usuario = Usuario.objects.all()
+#         serializer = UsuarioSerializer(usuario, many=True)
+#         return Response(serializer.data)
+#     def post(self, request, format=None):
+#         serializer = UsuarioSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data,status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
