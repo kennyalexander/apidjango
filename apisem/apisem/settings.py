@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'apirest',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'apisem.urls'
@@ -75,6 +77,7 @@ WSGI_APPLICATION = 'apisem.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DataBase de manera local 
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.oracle',
@@ -83,6 +86,7 @@ WSGI_APPLICATION = 'apisem.wsgi.application'
 #         'PASSWORD': '123456',
 #     }
 # }
+# DataBase en OracleCloud
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
@@ -133,25 +137,16 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-        
-#     ],
-    
-# } 
 
-# REST_FRAMEWORK = {
-#    'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAdminUser',
-#    ),
-# }
-
+#sistema de token para autorizar las consultas fuera de la api
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-        # Otros esquemas de autenticación si los estás utilizando
     ],
 }
 APPEND_SLASH = False
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8100',
+]
