@@ -91,8 +91,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': 'projectsem_high',
-        'USER': 'PRUEBA',
-        'PASSWORD': 'Pru123456789'
+        'USER': 'kenny',
+        'PASSWORD': 'Ke123456789**'
     }
 }
 

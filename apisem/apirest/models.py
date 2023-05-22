@@ -77,9 +77,18 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
+class CargoEmp(models.Model):
+    id_cargo_emp = models.FloatField(primary_key=True)
+    cargo = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'cargo_emp'
+
+
 class Comuna(models.Model):
     id_comuna = models.FloatField(primary_key=True)
-    comuna = models.CharField(max_length=40, blank=True, null=True)
+    comuna = models.CharField(max_length=50)
     region_id_region = models.ForeignKey('Region', models.DO_NOTHING, db_column='region_id_region')
 
     class Meta:
@@ -133,15 +142,16 @@ class DjangoSession(models.Model):
 
 
 class Empleado(models.Model):
-    id_empleado = models.FloatField(primary_key=True)
-    p_nombre = models.CharField(max_length=15)
-    s_nombre = models.CharField(max_length=15)
-    p_apellido = models.CharField(max_length=15)
-    s_apellido = models.CharField(max_length=15)
-    email = models.CharField(max_length=50)
-    rut = models.CharField(max_length=8)
+    rut = models.FloatField(primary_key=True)
     dv_rut = models.CharField(max_length=1)
+    p_nombre = models.CharField(max_length=50)
+    s_nombre = models.CharField(max_length=50)
+    s_apellido = models.CharField(max_length=50)
+    p_apellido = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
     empresa_id_empresa = models.ForeignKey('Empresa', models.DO_NOTHING, db_column='empresa_id_empresa')
+    cargo_emp_id_cargo_emp = models.ForeignKey(CargoEmp, models.DO_NOTHING, db_column='cargo_emp_id_cargo_emp')
+    imagen = models.BinaryField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -152,6 +162,7 @@ class Empresa(models.Model):
     id_empresa = models.FloatField(primary_key=True)
     empresa = models.CharField(max_length=50)
     direccion = models.CharField(max_length=50)
+    n_direccion = models.FloatField()
     comuna_id_comuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='comuna_id_comuna')
 
     class Meta:
@@ -159,9 +170,45 @@ class Empresa(models.Model):
         db_table = 'empresa'
 
 
+class EstadoR(models.Model):
+    id_estado = models.FloatField(primary_key=True)
+    estado = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'estado_r'
+
+
+class EstadoS(models.Model):
+    id_estado_solicitud = models.FloatField(primary_key=True)
+    estado_solicitud = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'estado_s'
+
+
+class Piso(models.Model):
+    id_piso = models.FloatField(primary_key=True)
+    piso = models.FloatField()
+
+    class Meta:
+        managed = False
+        db_table = 'piso'
+
+
+class Prioridad(models.Model):
+    id_prioridad = models.FloatField(primary_key=True)
+    prioridad = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'prioridad'
+
+
 class Region(models.Model):
     id_region = models.FloatField(primary_key=True)
-    region = models.CharField(max_length=40)
+    region = models.CharField(max_length=50)
 
     class Meta:
         managed = False
@@ -169,53 +216,49 @@ class Region(models.Model):
 
 
 class Reporte(models.Model):
-    id_reporte = models.FloatField(primary_key=True)
-    imagen = models.BinaryField()
-    titulo = models.CharField(max_length=25)
-    ingreso = models.DateField()
-    descripcion = models.CharField(max_length=250)
-    empleado_id_empleado = models.ForeignKey(Empleado, models.DO_NOTHING, db_column='empleado_id_empleado')
+    id_repote = models.FloatField(primary_key=True)
+    titulo = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=300)
+    fecha_ingreso = models.DateField()
+    usuario_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='usuario_usuario')
+    prioridad_id_prioridad = models.ForeignKey(Prioridad, models.DO_NOTHING, db_column='prioridad_id_prioridad')
+    piso_id_piso = models.ForeignKey(Piso, models.DO_NOTHING, db_column='piso_id_piso')
+    sector_id_sector = models.ForeignKey('Sector', models.DO_NOTHING, db_column='sector_id_sector')
+    estado_r_id_estado = models.ForeignKey(EstadoR, models.DO_NOTHING, db_column='estado_r_id_estado')
+    imagen = models.BinaryField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'reporte'
 
 
+class Sector(models.Model):
+    id_sector = models.FloatField(primary_key=True)
+    sector = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'sector'
+
+
 class Solicitud(models.Model):
     id_solicitud = models.FloatField(primary_key=True)
-    solicitud = models.CharField(max_length=25)
-    descripcion = models.CharField(max_length=50)
-    fecha = models.DateField()
-    empleado_id_empleado = models.ForeignKey(Empleado, models.DO_NOTHING, db_column='empleado_id_empleado')
+    solicitud = models.CharField(max_length=50)
+    attribute_3 = models.DateField()
+    usuario_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='usuario_usuario')
+    estado_s_id_estado_solicitud = models.ForeignKey(EstadoS, models.DO_NOTHING, db_column='estado_s_id_estado_solicitud')
 
     class Meta:
         managed = False
         db_table = 'solicitud'
 
 
-class Tabla(models.Model):
-    id = models.FloatField(primary_key=True)
-    nombre = models.CharField(max_length=100, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'tabla'
-
-
 class Usuario(models.Model):
-    id = models.BigIntegerField(primary_key=True)
-    nombre = models.CharField(max_length=50)
-    edad = models.FloatField(blank=True, null=True)
-    direccion = models.CharField(max_length=100, blank=True, null=True)
+    usuario = models.CharField(primary_key=True, max_length=50)
+    contrasena = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=20)
+    empleado_rut = models.ForeignKey(Empleado, models.DO_NOTHING, db_column='empleado_rut')
 
     class Meta:
         managed = False
         db_table = 'usuario'
-
-
-class Yoryi(models.Model):
-    id_usuario = models.BigIntegerField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'yoryi'

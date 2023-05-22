@@ -1,7 +1,7 @@
 from requests import Response
 from .models import *
 from rest_framework.views import APIView
-from .serializers import UsuarioSerializer, TablaSerializer, ReporteSerializer
+from .serializers import UsuarioSerializer, ReporteSerializer
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
@@ -30,18 +30,6 @@ class Registrar(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         
-#tabla con id autoincrementable       
-class Tabla(APIView):
-    permission_classes = [AllowAny]
-    def post (self, request, format=None):
-        serializer = TablaSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message': '¡El método POST fue exitoso!'})
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-
 
 class Reporte(APIView):
     permission_classes = [AllowAny]
