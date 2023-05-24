@@ -29,7 +29,7 @@ class Reporte(APIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
-        imagen = data.get('imagen')
+        imagen = request.FILES.get('imagen')
 
         if imagen:
             # Convertir la imagen a una cadena base64

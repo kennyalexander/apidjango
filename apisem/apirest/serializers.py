@@ -10,20 +10,10 @@ class UsuarioSerializer(serializers.ModelSerializer):
 
 
 class ReporteSerializer(serializers.ModelSerializer):
-    imagen = serializers.CharField(max_length=None, allow_blank=True, required=False)
-
+    imagen = serializers.ImageField(max_length=None, use_url=True, allow_empty_file=True, required=False)
     class Meta:
         model = Reporte
         fields = '__all__'
-
-    def create(self, validated_data):
-        imagen_data = validated_data.pop('imagen', None)
-
-        # Si hay datos de imagen, se convierte de cadena base64 a bytes
-        if imagen_data:
-            validated_data['imagen'] = imagen_data.encode('utf-8')
-
-        return super().create(validated_data)
 
 class SolicitudSerializer(serializers.ModelSerializer):
     class Meta:
