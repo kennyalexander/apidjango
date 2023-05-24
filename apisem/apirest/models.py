@@ -147,11 +147,10 @@ class Empleado(models.Model):
     p_nombre = models.CharField(max_length=50)
     s_nombre = models.CharField(max_length=50)
     s_apellido = models.CharField(max_length=50)
-    p_apellido = models.CharField(max_length=50)
+    s_apellido_1 = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
-    empresa_id_empresa = models.ForeignKey('Empresa', models.DO_NOTHING, db_column='empresa_id_empresa')
     cargo_emp_id_cargo_emp = models.ForeignKey(CargoEmp, models.DO_NOTHING, db_column='cargo_emp_id_cargo_emp')
-    imagen = models.BinaryField(blank=True, null=True)
+    sucursal_id_sucursal = models.ForeignKey('Sucursal', models.DO_NOTHING, db_column='sucursal_id_sucursal')
 
     class Meta:
         managed = False
@@ -163,7 +162,7 @@ class Empresa(models.Model):
     empresa = models.CharField(max_length=50)
     direccion = models.CharField(max_length=50)
     n_direccion = models.FloatField()
-    comuna_id_comuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='comuna_id_comuna')
+    comuna_id_comuna = models.FloatField()
 
     class Meta:
         managed = False
@@ -186,6 +185,27 @@ class EstadoS(models.Model):
     class Meta:
         managed = False
         db_table = 'estado_s'
+
+
+class EstadoU(models.Model):
+    id_estado_u = models.FloatField(primary_key=True)
+    estado_u = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'estado_u'
+
+
+class Insumos(models.Model):
+    id_insumo = models.FloatField(primary_key=True)
+    insumo = models.CharField(max_length=50)
+    stock = models.FloatField()
+    color = models.CharField(max_length=50, blank=True, null=True)
+    sucursal_id_sucursal = models.ForeignKey('Sucursal', models.DO_NOTHING, db_column='sucursal_id_sucursal')
+
+    class Meta:
+        managed = False
+        db_table = 'insumos'
 
 
 class Piso(models.Model):
@@ -225,7 +245,9 @@ class Reporte(models.Model):
     piso_id_piso = models.ForeignKey(Piso, models.DO_NOTHING, db_column='piso_id_piso')
     sector_id_sector = models.ForeignKey('Sector', models.DO_NOTHING, db_column='sector_id_sector')
     estado_r_id_estado = models.ForeignKey(EstadoR, models.DO_NOTHING, db_column='estado_r_id_estado')
+    sucursal_id_sucursal = models.ForeignKey('Sucursal', models.DO_NOTHING, db_column='sucursal_id_sucursal')
     imagen = models.BinaryField(blank=True, null=True)
+    asignado = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -244,20 +266,33 @@ class Sector(models.Model):
 class Solicitud(models.Model):
     id_solicitud = models.FloatField(primary_key=True)
     solicitud = models.CharField(max_length=50)
-    attribute_3 = models.DateField()
-    usuario_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='usuario_usuario')
+    fecha = models.DateField()
     estado_s_id_estado_solicitud = models.ForeignKey(EstadoS, models.DO_NOTHING, db_column='estado_s_id_estado_solicitud')
+    sucursal_id_sucursal = models.ForeignKey('Sucursal', models.DO_NOTHING, db_column='sucursal_id_sucursal')
+    usuario_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='usuario_usuario')
 
     class Meta:
         managed = False
         db_table = 'solicitud'
 
 
+class Sucursal(models.Model):
+    id_sucursal = models.FloatField(primary_key=True)
+    sucursal = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=50)
+    n_direccion = models.FloatField()
+    comuna_id_comuna = models.ForeignKey(Comuna, models.DO_NOTHING, db_column='comuna_id_comuna')
+
+    class Meta:
+        managed = False
+        db_table = 'sucursal'
+
+
 class Usuario(models.Model):
     usuario = models.CharField(primary_key=True, max_length=50)
     contrasena = models.CharField(max_length=50)
-    tipo = models.CharField(max_length=20)
     empleado_rut = models.ForeignKey(Empleado, models.DO_NOTHING, db_column='empleado_rut')
+    estado_u_id_estado_u = models.ForeignKey(EstadoU, models.DO_NOTHING, db_column='estado_u_id_estado_u')
 
     class Meta:
         managed = False
