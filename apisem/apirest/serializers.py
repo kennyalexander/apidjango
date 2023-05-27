@@ -10,7 +10,6 @@ class UsuarioSerializer(serializers.ModelSerializer):
 
 
 class ReporteSerializer(serializers.ModelSerializer):
-    imagen = serializers.ImageField(max_length=None, use_url=True, allow_empty_file=True, required=False)
     class Meta:
         model = Reporte
         fields = '__all__'

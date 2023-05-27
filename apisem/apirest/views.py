@@ -22,26 +22,21 @@ class ReportList(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
     queryset = Reporte.objects.all()
     serializer_class = ReporteSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['sucursal_id_sucursal', 'asignado']
 
 
-class Reporte(APIView):
-    serializer_class = ReporteSerializer
+# class Reporte(APIView):
+#     serializer_class = ReporteSerializer
 
-    def post(self, request, *args, **kwargs):
-        data = request.data.copy()
-        imagen = request.FILES.get('imagen')
+#     def post(self, request, *args, **kwargs):
+#         data = request.data.copy()
 
-        if imagen:
-            # Convertir la imagen a una cadena base64
-            data['imagen'] = base64.b64encode(imagen.read()).decode('utf-8')
-
-        serializer = self.serializer_class(data=data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class Reporte(generics.GenericAPIView):
@@ -72,16 +67,16 @@ class Reporte(APIView):
 #         else:
 #             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-# class Reporte(generics.GenericAPIView):
-#     serializer_class = ReporteSerializer
-#     permission_classes = [AllowAny]
-#     def post (self, request, *args, **kwargs ):
-#         serializer = ReporteSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         else:
-#             return Response({'message': 'Hubo un error!'})
+class Reporte(generics.GenericAPIView):
+    serializer_class = ReporteSerializer
+    permission_classes = [AllowAny]
+    def post (self, request, *args, **kwargs ):
+        serializer = ReporteSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'message': 'Hubo un error!'})
         
 class Solicitud(generics.GenericAPIView):
     serializer_class = SolicitudSerializer
