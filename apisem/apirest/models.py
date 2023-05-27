@@ -8,6 +8,15 @@
 from django.db import models
 
 
+class Asdf(models.Model):
+    id = models.FloatField(primary_key=True)
+    imagen = models.BinaryField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'asdf'
+
+
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150, blank=True, null=True)
 
@@ -146,11 +155,12 @@ class Empleado(models.Model):
     dv_rut = models.CharField(max_length=1)
     p_nombre = models.CharField(max_length=50)
     s_nombre = models.CharField(max_length=50)
+    p_apellido = models.CharField(max_length=50)
     s_apellido = models.CharField(max_length=50)
-    s_apellido_1 = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
     cargo_emp_id_cargo_emp = models.ForeignKey(CargoEmp, models.DO_NOTHING, db_column='cargo_emp_id_cargo_emp')
     sucursal_id_sucursal = models.ForeignKey('Sucursal', models.DO_NOTHING, db_column='sucursal_id_sucursal')
+    imagen = models.BinaryField(blank=True, null=True)
 
     class Meta:
         managed = False
