@@ -105,3 +105,16 @@ class Solicitud(generics.GenericAPIView):
 #     imagen_decodificada = base64.b64decode(datos)
 #     imagen = ContentFile(imagen_decodificada, name=nombre_archivo + "." + extension)
 #     return imagen
+
+
+
+class Departaments(generics.GenericAPIView):
+    serializer_class = DepartamentsSerializer
+    permission_classes = [AllowAny]
+    def post (self, request, *args, **kwargs ):
+        serializer = DepartamentsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'message': 'Hubo un error!'})

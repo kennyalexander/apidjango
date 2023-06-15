@@ -105,6 +105,15 @@ class Comuna(models.Model):
         db_table = 'comuna'
 
 
+class Departments(models.Model):
+    id = models.AutoField(primary_key=True)
+    description = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'departments'
+
+
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
     object_id = models.TextField(blank=True, null=True)
@@ -246,10 +255,10 @@ class Region(models.Model):
 
 
 class Reporte(models.Model):
-    id_repote = models.FloatField(primary_key=True)
+    id_repote = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=300)
-    fecha_ingreso = models.DateField()
+    # fecha_ingreso = models.DateField()
     usuario_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='usuario_usuario')
     prioridad_id_prioridad = models.ForeignKey(Prioridad, models.DO_NOTHING, db_column='prioridad_id_prioridad')
     piso_id_piso = models.ForeignKey(Piso, models.DO_NOTHING, db_column='piso_id_piso')
@@ -274,7 +283,7 @@ class Sector(models.Model):
 
 
 class Solicitud(models.Model):
-    id_solicitud = models.FloatField(primary_key=True)
+    id_solicitud = models.AutoField(primary_key=True)
     solicitud = models.CharField(max_length=50)
     fecha = models.DateField()
     estado_s_id_estado_solicitud = models.ForeignKey(EstadoS, models.DO_NOTHING, db_column='estado_s_id_estado_solicitud')
