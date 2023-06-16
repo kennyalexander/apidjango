@@ -9,4 +9,6 @@ urlpatterns = [
     path('reportelist/', ReportList.as_view(), name='reporte_list'),
     path('solicitud/', Solicitud.as_view(), name='solicitud'),
     path('departament/', Departaments.as_view(), name='departament'),
+    path('reporteupd/<int:id_reporte>/', Reportupdate.as_view(), name='report-upd'),
+    path('insumoupd/<int:id_insumo>/', InsumosUpd.as_view(), name='insumo-upd')
 ]

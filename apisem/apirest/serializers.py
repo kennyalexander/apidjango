@@ -23,3 +23,8 @@ class DepartamentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Departments
         fields = '__all__'
+
+class InsumosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Insumos
+        fields = '__all__'

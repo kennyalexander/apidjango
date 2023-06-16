@@ -9,7 +9,7 @@ from django.core.files.base import ContentFile
 from django_filters.rest_framework import DjangoFilterBackend
 import base64
 
-#listar usuario
+#listar usuario con filtro
 
 class UsuariosList(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
@@ -18,6 +18,9 @@ class UsuariosList(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['usuario']
 
+
+#Listar reportes con filtro en asignado y en id de sucursal
+
 class ReportList(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
     queryset = Reporte.objects.all()
@@ -25,48 +28,19 @@ class ReportList(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['sucursal_id_sucursal', 'asignado']
 
-
-# class Reporte(APIView):
-#     serializer_class = ReporteSerializer
-
-#     def post(self, request, *args, **kwargs):
-#         data = request.data.copy()
-
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         else:
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class Reportupdate(generics.RetrieveUpdateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Reporte.objects.all()
+    serializer_class = ReporteSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['sucursal_id_sucursal', 'asignado']
+    lookup_field = 'id_reporte'
 
 
-# class Reporte(generics.GenericAPIView):
-#     serializer_class = ReporteSerializer
-#     permission_classes = [AllowAny]
-
-#     def post(self, request, *args, **kwargs):
-#         # Obtenemos el archivo de imagen de la solicitud POST
-#         imagen_data = request.FILES.get('imagen')
-
-#         # Verificamos si se proporcionó una imagen
-#         if imagen_data:
-#             # Leemos los datos binarios de la imagen
-#             imagen_bytes = imagen_data.read()
-
-#             # Creamos un diccionario con los datos del formulario, incluyendo la imagen binaria
-#             data = request.data.copy()
-#             data['imagen'] = imagen_bytes
-
-#             # Creamos una instancia del serializer con los datos actualizados
-#             serializer = self.get_serializer(data=data)
-#         else:
-#             serializer = self.get_serializer(data=request.data)
-
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         else:
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    
+#metodo post para reporte
+
 class Reporte(generics.GenericAPIView):
     serializer_class = ReporteSerializer
     permission_classes = [AllowAny]
@@ -78,6 +52,7 @@ class Reporte(generics.GenericAPIView):
         else:
             return Response({'message': 'Hubo un error!'})
         
+#metodo post para solicitud
 class Solicitud(generics.GenericAPIView):
     serializer_class = SolicitudSerializer
     permission_classes = [AllowAny]
@@ -89,22 +64,6 @@ class Solicitud(generics.GenericAPIView):
         else:
             return Response({'message': 'Hubo un error!'}, status=status.HTTP_201_CREATED)
 
-        
-
-
-# def imagen_a_base64(imagen):
-#     with open(imagen.path, "rb") as archivo_imagen:
-#         contenido = archivo_imagen.read()
-#         base64_data = base64.b64encode(contenido)
-#         base64_string = base64_data.decode("utf-8")
-#         return base64_string
-
-# def base64_a_imagen(base64_string, nombre_archivo):
-#     formato, datos = base64_string.split(";base64,")
-#     extension = formato.split("/")[-1]
-#     imagen_decodificada = base64.b64decode(datos)
-#     imagen = ContentFile(imagen_decodificada, name=nombre_archivo + "." + extension)
-#     return imagen
 
 
 
@@ -118,3 +77,24 @@ class Departaments(generics.GenericAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response({'message': 'Hubo un error!'})
+        
+class InsumosUpd(generics.RetrieveUpdateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Insumos.objects.all()
+    serializer_class = InsumosSerializer
+    lookup_field = 'id_insumo'
+        
+
+# class ReporteActualiza(generics.UpdateAPIView):
+#     permission_classes = [AllowAny]
+#     queryset = Reporte.objects.all()
+#     serializer_class = ReporteSerializer
+#     lookup_field = 'id_reporte'  # Campo utilizado para buscar el objeto Reporte
+
+#     def put(self, request, *args, **kwargs):
+#         partial = kwargs.pop('partial', False)
+#         instance = self.get_object()
+#         serializer = self.get_serializer(instance, data=request.data, partial=partial)
+#         serializer.is_valid(raise_exception=True)
+#         self.perform_update(serializer)
+#         return Response(serializer.data)

@@ -267,6 +267,7 @@ class Reporte(models.Model):
     sucursal_id_sucursal = models.ForeignKey('Sucursal', models.DO_NOTHING, db_column='sucursal_id_sucursal')
     imagen = models.BinaryField(blank=True, null=True)
     asignado = models.CharField(max_length=50, blank=True, null=True)
+    desc_solucion = models.CharField(max_length=300, blank=True, null=True)
 
     class Meta:
         managed = False
