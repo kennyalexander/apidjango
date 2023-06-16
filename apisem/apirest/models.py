@@ -106,8 +106,8 @@ class Comuna(models.Model):
 
 
 class Departments(models.Model):
-    id = models.AutoField(primary_key=True)
-    description = models.CharField(max_length=50)
+    id = models.IntegerField(primary_key=True)
+    description = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -255,10 +255,10 @@ class Region(models.Model):
 
 
 class Reporte(models.Model):
-    id_repote = models.AutoField(primary_key=True)
+    id_reporte = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=300)
-    # fecha_ingreso = models.DateField()
+    # fecha_ingreso = models.DateTimeField()
     usuario_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='usuario_usuario')
     prioridad_id_prioridad = models.ForeignKey(Prioridad, models.DO_NOTHING, db_column='prioridad_id_prioridad')
     piso_id_piso = models.ForeignKey(Piso, models.DO_NOTHING, db_column='piso_id_piso')
