@@ -65,6 +65,12 @@ class Solicitud(generics.GenericAPIView):
             return Response({'message': 'Hubo un error!'}, status=status.HTTP_201_CREATED)
 
 
+#metodo actualizar insumo
+class InsumosUpd(generics.UpdateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Insumos.objects.all()
+    serializer_class = InsumoparcialSerializer
+    lookup_field = 'id_insumo'
 
 
 class Departaments(generics.GenericAPIView):
@@ -78,23 +84,3 @@ class Departaments(generics.GenericAPIView):
         else:
             return Response({'message': 'Hubo un error!'})
         
-class InsumosUpd(generics.RetrieveUpdateAPIView):
-    permission_classes = [AllowAny]
-    queryset = Insumos.objects.all()
-    serializer_class = InsumosSerializer
-    lookup_field = 'id_insumo'
-        
-
-# class ReporteActualiza(generics.UpdateAPIView):
-#     permission_classes = [AllowAny]
-#     queryset = Reporte.objects.all()
-#     serializer_class = ReporteSerializer
-#     lookup_field = 'id_reporte'  # Campo utilizado para buscar el objeto Reporte
-
-#     def put(self, request, *args, **kwargs):
-#         partial = kwargs.pop('partial', False)
-#         instance = self.get_object()
-#         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-#         serializer.is_valid(raise_exception=True)
-#         self.perform_update(serializer)
-#         return Response(serializer.data)

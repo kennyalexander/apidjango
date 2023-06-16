@@ -28,3 +28,9 @@ class InsumosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Insumos
         fields = '__all__'
+
+class InsumoparcialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Insumos
+        fields = ['stock',]
+        partial = True
