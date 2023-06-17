@@ -9,7 +9,7 @@ from django.db import models
 
 
 class Asdf(models.Model):
-    id = models.FloatField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     imagen = models.BinaryField(blank=True, null=True)
 
     class Meta:

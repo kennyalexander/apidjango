@@ -8,6 +8,8 @@ from rest_framework.authentication import BasicAuthentication
 from django.core.files.base import ContentFile
 from django_filters.rest_framework import DjangoFilterBackend
 import base64
+from io import BytesIO
+from rest_framework.parsers import MultiPartParser, FormParser
 
 #listar usuario con filtro
 
@@ -31,9 +33,7 @@ class ReportList(generics.ListCreateAPIView):
 class Reportupdate(generics.RetrieveUpdateAPIView):
     permission_classes = [AllowAny]
     queryset = Reporte.objects.all()
-    serializer_class = ReporteSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['sucursal_id_sucursal', 'asignado']
+    serializer_class = ReportupdSerializer
     lookup_field = 'id_reporte'
 
 
@@ -80,14 +80,18 @@ class InsumoList(generics.ListCreateAPIView):
     # filter_backends = [DjangoFilterBackend]
     # filterset_fields = ['usuario']
 
-class Departaments(generics.GenericAPIView):
-    serializer_class = DepartamentsSerializer
-    permission_classes = [AllowAny]
-    def post (self, request, *args, **kwargs ):
-        serializer = DepartamentsSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response({'message': 'Hubo un error!'})
+class Asdfview(APIView):
+    def post(self, request, format=None):
+        imagen_archivo = request.data.get('imagen', None)
         
+        if imagen_archivo:
+            imagen_datos = imagen_archivo.read()
+            
+            asdf = Asdf(imagen=imagen_datos)
+            asdf.save()
+            
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            return Response({'error': 'No se proporcionó una imagen'}, status=status.HTTP_400_BAD_REQUEST)
+
+

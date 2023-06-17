@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from django.core.files.base import ContentFile
 from .models import *
+import base64
 
 #se serializa para unir todos los datos del modelo en una variable
 
@@ -35,7 +37,17 @@ class InsumoparcialSerializer(serializers.ModelSerializer):
         fields = ['stock',]
         partial = True
 
+
+class ReportupdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reporte
+        fields = ['estado_r_id_estado',
+                  'desc_solucion',
+                  ]
+        partial = True
+
 class ReportepostSerializer(serializers.ModelSerializer):
+    imagen = serializers.ImageField(required=False)
     class Meta:
         model = Reporte
         fields = ['titulo',
@@ -49,3 +61,17 @@ class ReportepostSerializer(serializers.ModelSerializer):
                   'imagen',
                   ]
         partial = True
+
+        def create(self, validated_data):
+            imagen_data = validated_data.pop('imagen', None)
+            reporte = Reporte.objects.create(**validated_data)
+
+            if imagen_data:
+                reporte.imagen.save(imagen_data.name, imagen_data, save=True)
+
+            return reporte 
+
+class AsdfSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Asdf
+        fields = ['imagen']
