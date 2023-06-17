@@ -34,3 +34,18 @@ class InsumoparcialSerializer(serializers.ModelSerializer):
         model = Insumos
         fields = ['stock',]
         partial = True
+
+class ReportepostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reporte
+        fields = ['titulo',
+                  'descripcion',
+                  'usuario_usuario',
+                  'prioridad_id_prioridad',
+                  'piso_id_piso',
+                  'sector_id_sector',
+                  'estado_r_id_estado',
+                  'sucursal_id_sucursal',
+                  'imagen',
+                  ]
+        partial = True

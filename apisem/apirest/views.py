@@ -42,10 +42,10 @@ class Reportupdate(generics.RetrieveUpdateAPIView):
 #metodo post para reporte
 
 class Reporte(generics.GenericAPIView):
-    serializer_class = ReporteSerializer
+    serializer_class = ReportepostSerializer
     permission_classes = [AllowAny]
     def post (self, request, *args, **kwargs ):
-        serializer = ReporteSerializer(data=request.data)
+        serializer = ReportepostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -72,6 +72,13 @@ class InsumosUpd(generics.UpdateAPIView):
     serializer_class = InsumoparcialSerializer
     lookup_field = 'id_insumo'
 
+
+class InsumoList(generics.ListCreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Insumos.objects.all()
+    serializer_class = InsumosSerializer
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['usuario']
 
 class Departaments(generics.GenericAPIView):
     serializer_class = DepartamentsSerializer

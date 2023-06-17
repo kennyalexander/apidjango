@@ -10,5 +10,6 @@ urlpatterns = [
     path('solicitud/', Solicitud.as_view(), name='solicitud'),
     path('departament/', Departaments.as_view(), name='departament'),
     path('reporteupd/<int:id_reporte>/', Reportupdate.as_view(), name='report-upd'),
-    path('insumoupd/<int:id_insumo>/', InsumosUpd.as_view(), name='insumo-upd')
+    path('insumoupd/<int:id_insumo>/', InsumosUpd.as_view(), name='insumo-upd'),
+    path('insumolist/', InsumoList.as_view(), name='insumos_list'),
 ]
