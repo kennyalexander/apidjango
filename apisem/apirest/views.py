@@ -41,7 +41,7 @@ class Reportupdate(generics.RetrieveUpdateAPIView):
     
 #metodo post para reporte
 
-class Reporte(generics.GenericAPIView):
+class Reportepost(generics.GenericAPIView):
     serializer_class = ReportepostSerializer
     permission_classes = [AllowAny]
     def post (self, request, *args, **kwargs ):
@@ -82,16 +82,51 @@ class InsumoList(generics.ListCreateAPIView):
 
 class Asdfview(APIView):
     def post(self, request, format=None):
-        imagen_archivo = request.data.get('imagen', None)
-        
-        if imagen_archivo:
-            imagen_datos = imagen_archivo.read()
+        try:
+            titulo = request.data.get('titulo', None)
+            descripcion = request.data.get('descripcion', None)
+            usuario_usuario = request.data.get('usuario_usuario', None)
+            prioridad_id_prioridad = request.data.get('prioridad_id_prioridad', None)
+            piso_id_piso = request.data.get('piso_id_piso', None)
+            sector_id_sector = request.data.get('sector_id_sector', None)
+            estado_r_id_estado = request.data.get('estado_r_id_estado', None)
+            sucursal_id_sucursal = request.data.get('sucursal_id_sucursal', None)
             
-            asdf = Asdf(imagen=imagen_datos)
-            asdf.save()
+            imagen_archivo = request.data.get('imagen', None)
             
-            return Response(status=status.HTTP_201_CREATED)
-        else:
-            return Response({'error': 'No se proporcionó una imagen'}, status=status.HTTP_400_BAD_REQUEST)
+            if imagen_archivo:
+                imagen_datos = imagen_archivo.read()
+                
+                reporte = Reporte(
+                    titulo=titulo,
+                    descripcion=descripcion,
+                    usuario_usuario_id=usuario_usuario,
+                    prioridad_id_prioridad_id=prioridad_id_prioridad,
+                    piso_id_piso_id=piso_id_piso,
+                    sector_id_sector_id=sector_id_sector,
+                    estado_r_id_estado_id=estado_r_id_estado,
+                    sucursal_id_sucursal_id=sucursal_id_sucursal,
+                    imagen=imagen_datos
+                )
+                reporte.save()
+                
+                return Response({'Reporte creado correctamente con imagen'},status=status.HTTP_201_CREATED)
+            else:
+                reporte = Reporte(
+                    titulo=titulo,
+                    descripcion=descripcion,
+                    usuario_usuario_id=usuario_usuario,
+                    prioridad_id_prioridad_id=prioridad_id_prioridad,
+                    piso_id_piso_id=piso_id_piso,
+                    sector_id_sector_id=sector_id_sector,
+                    estado_r_id_estado_id=estado_r_id_estado,
+                    sucursal_id_sucursal_id=sucursal_id_sucursal,
+                )
+                reporte.save()
+                return Response({'Reporte creado correctamente sin imagen'},status=status.HTTP_201_CREATED)
+        except:
+            return Response({'¡Algo ocurrio!, Reporte no enviado'},status=status.HTTP_400_BAD_REQUEST)
+            
+            
 
 

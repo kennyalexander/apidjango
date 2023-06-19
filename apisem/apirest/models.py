@@ -270,7 +270,7 @@ class Reporte(models.Model):
     desc_solucion = models.CharField(max_length=300, blank=True, null=True)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'reporte'
 
 
