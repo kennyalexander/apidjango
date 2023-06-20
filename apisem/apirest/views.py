@@ -75,7 +75,6 @@ class Reportepost(APIView):
             prioridad_id_prioridad = request.data.get('prioridad_id_prioridad', None)
             piso_id_piso = request.data.get('piso_id_piso', None)
             sector_id_sector = request.data.get('sector_id_sector', None)
-            estado_r_id_estado = request.data.get('estado_r_id_estado', None)
             sucursal_id_sucursal = request.data.get('sucursal_id_sucursal', None)
             
             imagen_archivo = request.data.get('imagen', None)
@@ -90,7 +89,7 @@ class Reportepost(APIView):
                     prioridad_id_prioridad_id=prioridad_id_prioridad,
                     piso_id_piso_id=piso_id_piso,
                     sector_id_sector_id=sector_id_sector,
-                    estado_r_id_estado_id=estado_r_id_estado,
+                    estado_r_id_estado_id=1,
                     sucursal_id_sucursal_id=sucursal_id_sucursal,
                     imagen=imagen_datos
                 )
@@ -105,7 +104,7 @@ class Reportepost(APIView):
                     prioridad_id_prioridad_id=prioridad_id_prioridad,
                     piso_id_piso_id=piso_id_piso,
                     sector_id_sector_id=sector_id_sector,
-                    estado_r_id_estado_id=estado_r_id_estado,
+                    estado_r_id_estado_id=1,
                     sucursal_id_sucursal_id=sucursal_id_sucursal,
                 )
                 reporte.save()
