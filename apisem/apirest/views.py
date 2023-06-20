@@ -18,7 +18,7 @@ class UsuariosList(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['usuario']
+    filterset_fields = ['usuario', 'estado_u_id_estado_u']
 
 
 #Listar reportes con filtro en asignado y en id de sucursal

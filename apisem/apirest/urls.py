@@ -13,6 +13,5 @@ urlpatterns = [
     path('reporteupd/<int:id_reporte>/', Reportupdate.as_view(), name='report-upd'),
     path('insumoupd/<int:id_insumo>/', InsumosUpd.as_view(), name='insumo-upd'),
     path('insumolist/', InsumoList.as_view(), name='insumos_list'),
-    path('asdf/', Asdfview.as_view(), name='asdf'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
  
