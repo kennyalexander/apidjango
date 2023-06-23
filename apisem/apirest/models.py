@@ -258,7 +258,7 @@ class Reporte(models.Model):
     id_reporte = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=300)
-    # fecha_ingreso = models.DateTimeField()
+    fecha_ingreso = models.DateTimeField()
     usuario_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='usuario_usuario')
     prioridad_id_prioridad = models.ForeignKey(Prioridad, models.DO_NOTHING, db_column='prioridad_id_prioridad')
     piso_id_piso = models.ForeignKey(Piso, models.DO_NOTHING, db_column='piso_id_piso')

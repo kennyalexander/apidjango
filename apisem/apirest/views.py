@@ -28,7 +28,7 @@ class ReportList(generics.ListCreateAPIView):
     queryset = Reporte.objects.all()
     serializer_class = ReporteSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['sucursal_id_sucursal', 'asignado']
+    filterset_fields = ['sucursal_id_sucursal', 'asignado', 'estado_r_id_estado']
 
 class Reportupdate(generics.RetrieveUpdateAPIView):
     permission_classes = [AllowAny]
