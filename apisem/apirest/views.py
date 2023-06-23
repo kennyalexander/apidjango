@@ -19,7 +19,15 @@ class UsuariosList(generics.ListCreateAPIView):
     serializer_class = UsuarioSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['usuario', 'estado_u_id_estado_u']
+    
 
+
+class SolicitudList(generics.ListCreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Solicitud.objects.all()
+    serializer_class = SolicitudSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['usuario_usuario', 'estado_s_id_estado_solicitud']
 
 #Listar reportes con filtro en asignado y en id de sucursal
 
@@ -39,16 +47,26 @@ class Reportupdate(generics.RetrieveUpdateAPIView):
 
 
 #metodo post para solicitud
-class Solicitud(generics.GenericAPIView):
-    serializer_class = SolicitudSerializer
-    permission_classes = [AllowAny]
-    def post (self, request):
-        serializer = SolicitudSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+class SolicitudPost(APIView):
+    def post(self, request, format=None):
+        try:
+            solicitud = request.data.get('solicitud', None)
+            estado_s_id_estado_solicitud = request.data.get('estado_s_id_estado_solicitud', None)
+            sucursal_id_sucursal = request.data.get('sucursal_id_sucursal', None)
+            usuario_usuario = request.data.get('usuario_usuario', None)
+
+            solicitud = Solicitud(
+                solicitud=solicitud,
+                estado_s_id_estado_solicitud=estado_s_id_estado_solicitud,
+                sucursal_id_sucursal=sucursal_id_sucursal,
+                usuario_usuario=usuario_usuario
+            )
+            solicitud.save()
+
+
             return Response({'creado correctamente'}, status=status.HTTP_201_CREATED)
-        else:
-            return Response({'message': 'Hubo un error!'}, status=status.HTTP_201_CREATED)
+        except:
+            return Response({'message': 'Hubo un error'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 #metodo actualizar insumo

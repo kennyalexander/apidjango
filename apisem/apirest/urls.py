@@ -9,9 +9,10 @@ urlpatterns = [
     path('usuario/', UsuariosList.as_view(), name = 'usuario_list'),
     path('reporte/', Reportepost.as_view(), name='reporte'),
     path('reportelist/', ReportList.as_view(), name='reporte_list'),
-    path('solicitud/', Solicitud.as_view(), name='solicitud'),
+    path('solicitudpost/', SolicitudPost.as_view(), name='solicitud'),
     path('reporteupd/<int:id_reporte>/', Reportupdate.as_view(), name='report-upd'),
     path('insumoupd/<int:id_insumo>/', InsumosUpd.as_view(), name='insumo-upd'),
     path('insumolist/', InsumoList.as_view(), name='insumos_list'),
+    path('solicitudlist/', SolicitudList.as_view(), name='solicitud_list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
  

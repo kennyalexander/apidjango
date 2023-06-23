@@ -20,6 +20,16 @@ class SolicitudSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solicitud
         fields = '__all__'
+class SolicitudPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Solicitud
+        fields = [
+                  'solicitud',
+                  'estado_s_id_estado_solicitud',
+                  'sucursal_id_sucursal',
+                  'usuario_usuario']
+        partial = True
+        
 
 class DepartamentsSerializer(serializers.ModelSerializer):
     class Meta:

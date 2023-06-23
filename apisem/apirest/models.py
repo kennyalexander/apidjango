@@ -286,13 +286,13 @@ class Sector(models.Model):
 class Solicitud(models.Model):
     id_solicitud = models.AutoField(primary_key=True)
     solicitud = models.CharField(max_length=50)
-    fecha = models.DateField()
+    fecha = models.DateTimeField()
     estado_s_id_estado_solicitud = models.ForeignKey(EstadoS, models.DO_NOTHING, db_column='estado_s_id_estado_solicitud')
     sucursal_id_sucursal = models.ForeignKey('Sucursal', models.DO_NOTHING, db_column='sucursal_id_sucursal')
     usuario_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='usuario_usuario')
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'solicitud'
 
 
