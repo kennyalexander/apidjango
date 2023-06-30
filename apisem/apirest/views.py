@@ -5,11 +5,17 @@ from .serializers import *
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
-from django.core.files.base import ContentFile
 from django_filters.rest_framework import DjangoFilterBackend
-import base64
-from io import BytesIO
-from rest_framework.parsers import MultiPartParser, FormParser
+
+
+class EmpleadoList(generics.ListCreateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Empleado.objects.all()
+    serializer_class = EmpleadoSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['rut']
+
+
 
 #listar usuario con filtro
 
@@ -44,6 +50,12 @@ class Reportupdate(generics.RetrieveUpdateAPIView):
     serializer_class = ReportupdSerializer
     lookup_field = 'id_reporte'
 
+
+class Passupdate(generics.RetrieveUpdateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Usuario.objects.all()
+    serializer_class = PassUpdSerializer
+    lookup_field = 'usuario'
 
 
 #metodo post para solicitud

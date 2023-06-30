@@ -29,6 +29,12 @@ class SolicitudPostSerializer(serializers.ModelSerializer):
                   'sucursal_id_sucursal',
                   'usuario_usuario']
         partial = True
+
+
+class EmpleadoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Empleado
+        fields = '__all__'
         
 
 class DepartamentsSerializer(serializers.ModelSerializer):
@@ -46,6 +52,13 @@ class InsumoparcialSerializer(serializers.ModelSerializer):
         model = Insumos
         fields = ['stock',]
         partial = True
+
+class PassUpdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ['contrasena']
+        partial = True
+
 
 
 class ReportupdSerializer(serializers.ModelSerializer):

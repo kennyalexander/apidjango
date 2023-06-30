@@ -14,5 +14,7 @@ urlpatterns = [
     path('insumoupd/<int:id_insumo>/', InsumosUpd.as_view(), name='insumo-upd'),
     path('insumolist/', InsumoList.as_view(), name='insumos_list'),
     path('solicitudlist/', SolicitudList.as_view(), name='solicitud_list'),
+    path('passupd/<usuario>', Passupdate.as_view(), name='pass-upd'),
+    path('empleado/', EmpleadoList.as_view(), name='empleado_list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
  
