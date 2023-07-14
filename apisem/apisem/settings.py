@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xd2@$5gm7-y41t9np4&sa!&nm=tf3^b&^plhz#fe*%un6@^2r9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -82,23 +82,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # DataBase de manera local 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.oracle',
-#         'NAME': '127.0.0.1:1521/xe',
-#         'USER': 'C##PRUEBA',
-#         'PASSWORD': '123456',
-#     }
-# }
-# DataBase en OracleCloud
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'projectsem_high',
-        'USER': 'kenny',
-        'PASSWORD': 'Ke123456789**'
+        'NAME': '127.0.0.1:1521/xe',
+        'USER': 'ADMINSEM',
+        'PASSWORD': '123456',
     }
 }
+# # DataBase en OracleCloud
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.oracle',
+#         'NAME': 'projectsem_high',
+#         'USER': 'kenny',
+#         'PASSWORD': 'Ke123456789**'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -158,5 +158,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8100',
     'http://localhost:8101',
     'http://localhost:4200',
-    'http://192.168.100.88:8100' 
+    'http://192.168.100.88:8101', 
+    'http://192.168.100.88:8101'
 ]
